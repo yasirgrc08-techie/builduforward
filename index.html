@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>buildUforward — Digital Solutions for Growing Businesses</title>
+<meta name="description" content="buildUforward — IT services, custom website development, Android apps, and business automation. Affordable, scalable digital solutions for small & medium businesses.">
+<meta property="og:title" content="buildUforward — Build Systems. Stay Consistent. Grow Faster.">
+<meta property="og:description" content="Custom websites, Android apps, full-stack development & business automation for SMBs. DSA & System Design sheets for engineers.">
+<meta property="og:image" content="https://builduforward.github.io/images/logo.png">
+<meta property="og:url" content="https://builduforward.github.io">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0f;--bg2:#111119;--card:#16161f;--border:#1e1e2e;--text:#e4e4ed;--text2:#9494a8;--text3:#6b6b80;--accent:#22c55e;--accent-l:#4ade80;--accent-glow:rgba(34,197,94,.12);--blue:#3b82f6;--orange:#f59e0b;--red:#ef4444;--pink:#ec4899;--cyan:#06b6d4;--sans:'Inter',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace;--max-w:1200px;--r:16px;--tr:.35s cubic-bezier(.4,0,.2,1);--nav-bg:rgba(10,10,15,.85);--glass:rgba(10,10,15,.6)}
+[data-theme="light"]{--bg:#f8f9fc;--bg2:#eef0f5;--card:#fff;--border:#e2e4ea;--text:#1a1a2e;--text2:#555566;--text3:#888899;--accent-glow:rgba(34,197,94,.08);--nav-bg:rgba(248,249,252,.85);--glass:rgba(248,249,252,.7)}
+[data-theme="light"] .dot-grid{background-image:radial-gradient(rgba(34,197,94,.05) 1px,transparent 1px)}
+[data-theme="light"] .hero-bg .orb{opacity:.08}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;transition:background .4s,color .4s}
+a{color:var(--accent-l);text-decoration:none;transition:color var(--tr)}
+a:hover{color:#86efac}
+img{max-width:100%;display:block}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* Scroll Progress */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--accent));background-size:300% 100%;animation:grad-shift 4s ease infinite;z-index:200;width:0%;transition:width .1s linear}
+@keyframes grad-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.dot-grid{position:fixed;inset:0;z-index:-1;background-image:radial-gradient(rgba(34,197,94,.06) 1px,transparent 1px);background-size:30px 30px;pointer-events:none}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:all var(--tr)}
+.nav.scrolled{border-bottom-color:var(--border);box-shadow:0 4px 30px rgba(0,0,0,.15)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-weight:800;font-size:1.2rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.nav-logo span.b{color:var(--blue)}
+.nav-logo span.u{color:var(--cyan)}
+.nav-logo span.f{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);font-size:.85rem;font-weight:500;position:relative}
+.nav-links a:hover{color:var(--text)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width var(--tr);border-radius:1px}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.nav-cta{padding:8px 20px;background:var(--accent);color:#000;border-radius:8px;font-weight:700;font-size:.85rem;transition:all var(--tr);border:none;cursor:pointer;font-family:var(--sans)}
+.nav-cta:hover{background:var(--accent-l);color:#000;transform:translateY(-1px);box-shadow:0 6px 20px rgba(34,197,94,.3)}
+.theme-toggle{width:auto;border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;transition:all var(--tr);font-family:var(--sans)}
+.theme-toggle:hover{border-color:var(--accent);background:var(--accent-glow)}
+.nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+
+/* Sections */
+.section{max-width:var(--max-w);margin:0 auto;padding:6rem 2rem}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:var(--accent-l);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;font-weight:500}
+.section-tag::before{content:'';width:24px;height:1px;background:var(--accent)}
+.section-title{font-size:2.75rem;font-weight:800;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
+.section-sub{color:var(--text2);font-size:1.1rem;max-width:600px}
+
+/* Hero */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.2}
+.hero-bg .o1{width:600px;height:600px;background:var(--accent);top:-200px;right:-200px;animation:drift 12s ease-in-out infinite}
+.hero-bg .o2{width:400px;height:400px;background:var(--cyan);bottom:-150px;left:-100px;animation:drift 12s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
+.hero-left{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(34,197,94,.25);padding:6px 18px;border-radius:100px;font-size:.85rem;color:var(--accent-l);font-weight:500;margin-bottom:2rem}
+.hero-badge .pulse{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-.03em}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent-l),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.1rem;color:var(--text2);max-width:540px;margin-bottom:2rem;line-height:1.8}
+.hero-desc strong{color:var(--text)}
+.hero-actions{display:flex;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all var(--tr);cursor:pointer;border:none;font-family:var(--sans)}
+.btn-p{background:var(--accent);color:#000}
+.btn-p:hover{background:var(--accent-l);color:#000;transform:translateY(-2px);box-shadow:0 10px 30px rgba(34,197,94,.3)}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-o:hover{border-color:var(--accent);color:var(--accent-l);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+.hero-stat .num{font-size:1.75rem;font-weight:800}
+.hero-stat .lbl{font-size:.8rem;color:var(--text3);margin-top:2px}
+
+/* Hero cards */
+.hero-right{position:relative;z-index:1;display:flex;justify-content:center}
+.hero-cards{display:flex;flex-direction:column;gap:1rem;width:360px}
+.hero-action-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all var(--tr);text-decoration:none;color:var(--text);position:relative;overflow:hidden}
+.hero-action-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:0 4px 4px 0;transition:width var(--tr)}
+.hero-action-card:hover{border-color:var(--accent);transform:translateX(-6px);box-shadow:0 10px 35px rgba(0,0,0,.3);color:var(--text)}
+.hero-action-card:hover::before{width:6px}
+.hero-action-card.card-hire::before{background:var(--accent)}
+.hero-action-card.card-dsa::before{background:var(--orange)}
+.hero-action-card.card-sd::before{background:var(--pink)}
+.hero-action-card .card-icon{font-size:2rem;flex-shrink:0;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.card-hire .card-icon{background:rgba(34,197,94,.12)}
+.card-dsa .card-icon{background:rgba(245,158,11,.12)}
+.card-sd .card-icon{background:rgba(236,72,153,.12)}
+.hero-action-card .card-title{font-weight:700;font-size:1rem;margin-bottom:2px}
+.hero-action-card .card-desc{font-size:.8rem;color:var(--text3)}
+.hero-action-card .card-arrow{margin-left:auto;font-size:1.2rem;color:var(--text3);transition:transform var(--tr),color var(--tr)}
+.hero-action-card:hover .card-arrow{transform:translateX(4px);color:var(--accent-l)}
+@keyframes card-slide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.hero-cards .hero-action-card:nth-child(1){animation:card-slide .6s ease both;animation-delay:.3s}
+.hero-cards .hero-action-card:nth-child(2){animation:card-slide .6s ease both;animation-delay:.5s}
+.hero-cards .hero-action-card:nth-child(3){animation:card-slide .6s ease both;animation-delay:.7s}
+
+/* Services */
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem}
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2.5rem;position:relative;overflow:hidden;transition:all var(--tr)}
+.service-card:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.service-card.premium::before{background:linear-gradient(90deg,var(--orange),var(--pink),var(--accent))}
+.service-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:1.25rem}
+.service-badge-web{background:rgba(6,182,212,.12);color:var(--cyan);border:1px solid rgba(6,182,212,.25)}
+.service-badge-app{background:rgba(245,158,11,.12);color:var(--orange);border:1px solid rgba(245,158,11,.25)}
+.service-title{font-size:1.4rem;font-weight:800;margin-bottom:.5rem}
+.service-desc{color:var(--text2);font-size:.95rem;line-height:1.8;margin-bottom:1.25rem}
+.service-features{list-style:none;margin-bottom:1.5rem}
+.service-features li{padding:6px 0;font-size:.9rem;color:var(--text2);display:flex;align-items:center;gap:8px}
+.service-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
+.service-price-row{display:flex;align-items:baseline;gap:.75rem;margin-bottom:1.5rem}
+.service-price-row .price{font-size:2rem;font-weight:900}
+.service-price-row .price-note{font-size:.85rem;color:var(--text3)}
+.service-platforms{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
+.service-platforms span{font-size:.75rem;padding:4px 10px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-weight:500}
+.session-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 24px;background:var(--accent);color:#000;border-radius:8px;font-weight:600;font-size:.9rem;transition:all var(--tr)}
+.session-btn:hover{background:var(--accent-l);color:#000;transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,197,94,.3)}
+
+/* Motto */
+.motto-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3rem;margin-top:2.5rem}
+.motto-quote{font-size:1.4rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.5}
+.motto-quote span{color:var(--accent-l)}
+.motto-body{color:var(--text2);font-size:1rem;line-height:1.9;max-width:700px;margin:0 auto;text-align:center}
+.motto-body strong{color:var(--text)}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;transition:all var(--tr)}
+.skill-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,.3)}
+.skill-icon{font-size:2rem;margin-bottom:.75rem}
+.skill-name{font-weight:700;font-size:1.05rem;margin-bottom:.5rem}
+.skill-desc{color:var(--text2);font-size:.88rem;margin-bottom:1rem;line-height:1.6}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+.skill-tags span{font-size:.78rem;padding:4px 12px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-weight:500;transition:all var(--tr)}
+.skill-tags span:hover{border-color:var(--accent);background:var(--accent-glow)}
+
+/* Contact */
+.contact-center{text-align:center}
+.contact-grid{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:2.5rem}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem 2.5rem;display:flex;align-items:center;gap:1rem;transition:all var(--tr);min-width:220px;justify-content:center}
+.contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3);color:var(--text)}
+.contact-card svg{width:24px;height:24px;fill:currentColor;flex-shrink:0}
+.c-label{font-weight:600;font-size:.95rem}
+.c-value{font-size:.82rem;color:var(--text3)}
+
+/* Footer */
+footer{text-align:center;padding:2.5rem 2rem;border-top:1px solid var(--border);color:var(--text3);font-size:.85rem}
+footer a{color:var(--accent-l)}
+
+/* Animations */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-stagger>*{opacity:0;transform:translateY(25px);transition:opacity .5s ease,transform .5s ease}
+.reveal-stagger.visible>*:nth-child(1){transition-delay:0s}
+.reveal-stagger.visible>*:nth-child(2){transition-delay:.1s}
+.reveal-stagger.visible>*:nth-child(3){transition-delay:.2s}
+.reveal-stagger.visible>*:nth-child(4){transition-delay:.3s}
+.reveal-stagger.visible>*:nth-child(5){transition-delay:.4s}
+.reveal-stagger.visible>*:nth-child(6){transition-delay:.5s}
+.reveal-stagger.visible>*{opacity:1;transform:translateY(0)}
+
+/* Booking Modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--r);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-header{padding:1.5rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:2;border-radius:var(--r) var(--r) 0 0}
+.modal-header h3{font-size:1.2rem;font-weight:700}
+.modal-close{background:none;border:none;color:var(--text2);font-size:1.5rem;cursor:pointer}
+.modal-body{padding:2rem}
+.modal-step{display:none}
+.modal-step.active{display:block}
+.form-group{margin-bottom:1.25rem}
+.form-label{display:block;font-size:.85rem;font-weight:600;color:var(--text2);margin-bottom:.5rem}
+.form-input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:.95rem;font-family:var(--sans);transition:border-color var(--tr)}
+.form-input:focus{outline:none;border-color:var(--accent)}
+.form-input::placeholder{color:var(--text3)}
+.booking-summary{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.25rem}
+.summary-row{display:flex;justify-content:space-between;padding:4px 0;font-size:.9rem}
+.summary-row .label{color:var(--text2)}
+.summary-row .value{font-weight:600}
+.summary-row.total{border-top:1px solid var(--border);margin-top:.5rem;padding-top:.75rem;font-size:1rem}
+.summary-row.total .value{color:var(--accent)}
+.modal-btn{width:100%;padding:14px;border-radius:10px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all var(--tr)}
+.modal-btn-primary{background:var(--accent);color:#000}
+.modal-btn-primary:hover{background:var(--accent-l);transform:translateY(-1px)}
+.modal-btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.modal-btn-back{background:transparent;color:var(--text2);border:1px solid var(--border);margin-bottom:.75rem}
+.success-check{width:80px;height:80px;border-radius:50%;background:rgba(34,197,94,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2.5rem}
+
+@media(max-width:1024px){
+    .hero{grid-template-columns:1fr;text-align:center}
+    .hero-right{order:-1}
+    .hero-cards{width:100%;max-width:400px;margin:0 auto}
+    .hero-desc{margin:0 auto 2rem}
+    .hero-actions{justify-content:center}
+    .hero-stats{justify-content:center}
+    .services-grid{grid-template-columns:1fr}
+    .skills-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+    .nav-links{display:none}
+    .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(20px);padding:1.5rem 2rem;border-bottom:1px solid var(--border);gap:1rem}
+    .nav-toggle{display:block}
+    .nav-cta{display:none}
+    .section{padding:3.5rem 1.25rem}
+    .section-title{font-size:2rem}
+    .skills-grid{grid-template-columns:1fr}
+    .contact-grid{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="dot-grid"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo"><span class="b">build</span><span class="u">U</span><span class="f">forward</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#skills">Expertise</a></li>
+            <li><a href="#motto">Philosophy</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="#services" class="nav-cta">Get Started</a>
+            <button class="theme-toggle" id="themeToggle">Night</button>
+            <button class="nav-toggle" id="navToggle">&#9776;</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero section" id="hero">
+    <div class="hero-bg"><div class="orb o1"></div><div class="orb o2"></div></div>
+    <div class="hero-left">
+        <div class="hero-badge"><span class="pulse"></span> Now Accepting Projects</div>
+        <h1>Build Systems.<br>Stay Consistent.<br><span class="grad">Grow Faster.</span></h1>
+        <p class="hero-desc">
+            We help <strong>small &amp; medium businesses</strong> grow in the digital world with custom websites, Android apps, full-stack solutions &amp; business automation.
+        </p>
+        <div class="hero-actions">
+            <a href="#services" class="btn btn-p">Our Services</a>
+            <a href="https://www.linkedin.com/company/builduforward/" target="_blank" rel="noopener noreferrer" class="btn btn-o">LinkedIn</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="num">SMB</div><div class="lbl">Focused</div></div>
+            <div class="hero-stat"><div class="num">24/7</div><div class="lbl">Support</div></div>
+            <div class="hero-stat"><div class="num">100%</div><div class="lbl">Custom Solutions</div></div>
+        </div>
+    </div>
+    <div class="hero-right">
+        <div class="hero-cards">
+            <a href="#services" class="hero-action-card card-hire">
+                <div class="card-icon">🛠️</div>
+                <div><div class="card-title">Hire Us</div><div class="card-desc">Website · App · Full-Stack Development</div></div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+            <a href="https://yasirgrc08-techie.github.io/sheets/dsa.html" class="hero-action-card card-dsa">
+                <div class="card-icon">🧩</div>
+                <div><div class="card-title">DSA Sheet — ₹49</div><div class="card-desc">300+ problems · Company-tagged · Solutions</div></div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+            <a href="https://yasirgrc08-techie.github.io/sheets/system-design.html" class="hero-action-card card-sd">
+                <div class="card-icon">🏛️</div>
+                <div><div class="card-title">System Design Sheet — ₹49</div><div class="card-desc">20+ HLD + LLD · Diagrams · Company-tagged</div></div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+    <div class="reveal">
+        <span class="section-tag">About Us</span>
+        <h2 class="section-title">Technology That Grows With Your Business</h2>
+    </div>
+    <div class="reveal" style="max-width:800px;">
+        <p style="color:var(--text2);font-size:1.05rem;line-height:1.9;">
+            We are a technology-driven company dedicated to helping <strong style="color:var(--text)">small and medium businesses</strong> grow in the digital world. Our mission is to simplify technology and make powerful digital solutions <strong style="color:var(--text)">accessible, affordable, and effective</strong> for businesses of all sizes.
+        </p>
+        <br>
+        <p style="color:var(--text2);font-size:1.05rem;line-height:1.9;">
+            We specialize in <strong style="color:var(--text)">IT services, custom website development, Android application development, and business automation solutions</strong>. By combining innovation with practical strategies, we create scalable systems that improve efficiency, enhance customer experience, and drive measurable growth.
+        </p>
+        <br>
+        <p style="color:var(--text2);font-size:1.05rem;line-height:1.9;">
+            Our team focuses on understanding each client's unique needs and delivering tailored solutions that align with their business goals. At our core, we believe in <strong style="color:var(--text)">long-term partnerships, transparency, and continuous improvement</strong>&mdash;helping businesses not just adapt to technology, but truly leverage it to succeed.
+        </p>
+    </div>
+</section>
+
+<!-- Services -->
+<section class="section" id="services">
+    <div class="reveal" style="text-align:center;">
+        <span class="section-tag">Services</span>
+        <h2 class="section-title">Build Your Dream Product</h2>
+        <p class="section-sub" style="margin:0 auto;">From stunning websites to full-stack cross-platform apps — we build it all from scratch.</p>
+    </div>
+    <div class="services-grid reveal reveal-stagger">
+        <div class="service-card">
+            <span class="service-badge service-badge-web">Website / Portfolio</span>
+            <div class="service-title">Custom Website</div>
+            <div class="service-desc">Professional, responsive websites tailored to your needs — for cafés, hotels, restaurants, schools, booking platforms, or any business.</div>
+            <ul class="service-features">
+                <li>Business &amp; Portfolio Websites</li>
+                <li>Café, Restaurant &amp; Hotel Sites</li>
+                <li>School &amp; Institute Websites</li>
+                <li>Booking &amp; Appointment Pages</li>
+                <li>Mobile Responsive &amp; SEO Optimized</li>
+                <li>Payment Integration</li>
+            </ul>
+            <div class="service-price-row">
+                <span class="price">₹1,000</span>
+                <span class="price-note">starting price</span>
+            </div>
+            <a href="#" onclick="openBooking('website','Custom Website Development',1000);return false;" class="session-btn">Get Started &rarr;</a>
+        </div>
+        <div class="service-card premium">
+            <span class="service-badge service-badge-app">Full-Stack App</span>
+            <div class="service-title">Cross-Platform App</div>
+            <div class="service-desc">Complete production-ready application — backend, frontend, database, API, deployment — running on every platform.</div>
+            <ul class="service-features">
+                <li>Android &amp; iOS App</li>
+                <li>Windows &amp; macOS Desktop</li>
+                <li>Web App (Browser)</li>
+                <li>Backend API + Database</li>
+                <li>Admin Dashboard</li>
+                <li>Cloud Deployment &amp; CI/CD</li>
+            </ul>
+            <div class="service-platforms">
+                <span>Android</span><span>iOS</span><span>Windows</span><span>macOS</span><span>Web</span><span>React Native</span><span>Node.js</span><span>PostgreSQL</span>
+            </div>
+            <div class="service-price-row">
+                <span class="price">₹5,000</span>
+                <span class="price-note">starting price</span>
+            </div>
+            <a href="#" onclick="openBooking('fullstack','Full-Stack Cross-Platform App',5000);return false;" class="session-btn">Get Started &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- Skills -->
+<section class="section" id="skills">
+    <div class="reveal">
+        <span class="section-tag">Expertise</span>
+        <h2 class="section-title">What We Do Best</h2>
+    </div>
+    <div class="skills-grid reveal reveal-stagger">
+        <div class="skill-card">
+            <div class="skill-icon">🌐</div>
+            <div class="skill-name">Web Development</div>
+            <div class="skill-desc">Modern, responsive websites with clean design, fast performance, and SEO optimization.</div>
+            <div class="skill-tags"><span>React</span><span>Next.js</span><span>HTML/CSS</span><span>WordPress</span></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">📱</div>
+            <div class="skill-name">Mobile Apps</div>
+            <div class="skill-desc">Native and cross-platform mobile applications for Android and iOS.</div>
+            <div class="skill-tags"><span>React Native</span><span>Android</span><span>iOS</span><span>Flutter</span></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">⚙️</div>
+            <div class="skill-name">Backend &amp; API</div>
+            <div class="skill-desc">Scalable backend services, RESTful APIs, databases, and cloud deployment.</div>
+            <div class="skill-tags"><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>MongoDB</span></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">🤖</div>
+            <div class="skill-name">Business Automation</div>
+            <div class="skill-desc">Automate repetitive tasks, workflows, and processes to save time and reduce errors.</div>
+            <div class="skill-tags"><span>Zapier</span><span>Scripts</span><span>Bots</span><span>CI/CD</span></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">☁️</div>
+            <div class="skill-name">Cloud &amp; DevOps</div>
+            <div class="skill-desc">Cloud hosting, deployment pipelines, Docker containers, and monitoring.</div>
+            <div class="skill-tags"><span>AWS</span><span>Azure</span><span>Docker</span><span>GitHub Actions</span></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">💳</div>
+            <div class="skill-name">Payment Integration</div>
+            <div class="skill-desc">Seamless payment gateway integration for your website or app — Razorpay, Stripe, UPI.</div>
+            <div class="skill-tags"><span>Razorpay</span><span>Stripe</span><span>UPI</span><span>Wallets</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Motto / Philosophy -->
+<section class="section" id="motto">
+    <div class="reveal">
+        <span class="section-tag">Our Philosophy</span>
+        <h2 class="section-title">Why Consistency Wins</h2>
+    </div>
+    <div class="motto-card reveal">
+        <p class="motto-quote">"<span>Consistency beats talent</span> in business.<br>Every. Single. Time."</p>
+        <div class="motto-body">
+            <p>Most small businesses don't fail because of bad ideas — they fail because of <strong>inconsistency</strong>. One week you're active, the next week you disappear. One month you invest in growth, the next you pause everything.</p>
+            <br>
+            <p>Growth doesn't work like that. Whether it's your website, your app, or your daily operations — <strong>success comes from showing up, improving, and building systems that work every day</strong>, not just when you feel like it.</p>
+            <br>
+            <p>That's where <strong>smart technology and automation</strong> come in. They help you stay consistent even when things get busy.</p>
+            <br>
+            <p style="font-weight:700;color:var(--accent-l);font-size:1.1rem;">Build systems. Stay consistent. Grow faster.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="section contact-center" id="contact">
+    <div class="reveal">
+        <span class="section-tag">Contact</span>
+        <h2 class="section-title">Let's Build Something Together</h2>
+        <p class="section-sub" style="margin:0 auto;">DM us to make your business smarter and more efficient.</p>
+    </div>
+    <div class="contact-grid reveal">
+        <a href="https://www.linkedin.com/company/builduforward/" class="contact-card" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <div><div class="c-label">LinkedIn</div><div class="c-value">buildUforward</div></div>
+        </a>
+        <a href="mailto:yasir.grc08@gmail.com" class="contact-card" target="_blank" rel="noopener noreferrer">
+            <span style="font-size:1.5rem">✉️</span>
+            <div><div class="c-label">Email</div><div class="c-value">yasir.grc08@gmail.com</div></div>
+        </a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.linkedin.com/company/builduforward/" target="_blank" rel="noopener noreferrer">buildUforward</a>. Build systems. Stay consistent. Grow faster.</p>
+</footer>
+
+<!-- Booking Modal -->
+<div class="modal-overlay" id="bookingModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Get Started</h3>
+            <button class="modal-close" onclick="closeBooking()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-step active" id="step1">
+                <div class="form-group">
+                    <label class="form-label">Your Name *</label>
+                    <input type="text" class="form-input" id="bookName" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-input" id="bookEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone *</label>
+                    <input type="tel" class="form-input" id="bookPhone" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Project Details *</label>
+                    <textarea class="form-input" id="bookMsg" rows="4" placeholder="Tell us about your project — what you need, timeline, any specific requirements..."></textarea>
+                </div>
+                <div class="booking-summary" id="bookingSummary"></div>
+                <button class="modal-btn modal-btn-primary" onclick="initiatePayment()">🔒 Pay Securely with Razorpay</button>
+            </div>
+            <div class="modal-step" id="step2">
+                <div style="text-align:center;">
+                    <div class="success-check">✅</div>
+                    <h3 style="margin-bottom:.5rem;">Payment Received!</h3>
+                    <p style="color:var(--text2);margin-bottom:1.5rem;">We'll reach out within 24 hours to discuss your project.</p>
+                    <div class="booking-summary" id="successSummary"></div>
+                    <button class="modal-btn modal-btn-primary" onclick="closeBooking()">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+    if(typeof emailjs!=='undefined')emailjs.init('97FdG6E2hT9AYtA_4');
+
+    const nav=document.getElementById('nav');
+    window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20));
+    const toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
+    toggle.addEventListener('click',()=>links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+    const themeBtn=document.getElementById('themeToggle');
+    const saved=localStorage.getItem('buf_theme');
+    if(saved==='light'){document.documentElement.setAttribute('data-theme','light');themeBtn.textContent='Day';}
+    themeBtn.addEventListener('click',()=>{
+        const isLight=document.documentElement.getAttribute('data-theme')==='light';
+        if(isLight){document.documentElement.removeAttribute('data-theme');themeBtn.textContent='Night';localStorage.setItem('buf_theme','dark');}
+        else{document.documentElement.setAttribute('data-theme','light');themeBtn.textContent='Day';localStorage.setItem('buf_theme','light');}
+    });
+
+    const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal,.reveal-stagger').forEach(el=>obs.observe(el));
+
+    const prog=document.getElementById('scrollProgress');
+    window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';});
+
+    let booking={name:'',price:0};
+    function openBooking(type,name,price){
+        booking={type,name,price};
+        document.getElementById('modalTitle').textContent='Get Started: '+name;
+        document.getElementById('bookingSummary').innerHTML='<div class="summary-row"><span class="label">Service</span><span class="value">'+name+'</span></div><div class="summary-row total"><span class="label">Starting Price</span><span class="value">₹'+price.toLocaleString()+'</span></div>';
+        document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('bookingModal').classList.add('active');
+        document.body.style.overflow='hidden';
+    }
+    function closeBooking(){document.getElementById('bookingModal').classList.remove('active');document.body.style.overflow='';}
+    document.getElementById('bookingModal').addEventListener('click',function(e){if(e.target===this)closeBooking();});
+
+    function initiatePayment(){
+        const name=document.getElementById('bookName').value.trim();
+        const email=document.getElementById('bookEmail').value.trim();
+        const phone=document.getElementById('bookPhone').value.trim();
+        const msg=document.getElementById('bookMsg').value.trim();
+        if(!name||!email||!phone){alert('Please fill all required fields.');return;}
+        const rzp=new Razorpay({
+            key:'rzp_live_SdMpxrq9I6XhNj',
+            amount:booking.price*100,
+            currency:'INR',
+            name:'buildUforward',
+            description:booking.name,
+            theme:{color:'#22c55e'},
+            prefill:{name,email,contact:phone},
+            handler:function(r){
+                document.getElementById('successSummary').innerHTML='<div class="summary-row"><span class="label">Service</span><span class="value">'+booking.name+'</span></div><div class="summary-row"><span class="label">Client</span><span class="value">'+name+'</span></div><div class="summary-row"><span class="label">Payment ID</span><span class="value" style="font-family:var(--mono);font-size:.8rem;">'+r.razorpay_payment_id+'</span></div><div class="summary-row total"><span class="label">Paid</span><span class="value">₹'+booking.price.toLocaleString()+'</span></div>';
+                document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
+                document.getElementById('step2').classList.add('active');
+                if(typeof emailjs!=='undefined'){
+                    emailjs.send('service_phdrjfp','template_k2ysz6k',{session:booking.name+' (buildUforward)',date:new Date().toLocaleDateString(),time:'N/A',name:name,email:email,phone:phone,message:msg||'No details',amount:'₹'+booking.price,payment_id:r.razorpay_payment_id,to_email:'yasir.grc08@gmail.com'}).catch(()=>{});
+                }
+            },
+            notes:{service:booking.name,client:name,email:email}
+        });
+        rzp.open();
+    }
+</script>
+</body>
+</html>
