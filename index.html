@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0a0a0f;--bg2:#111119;--card:#16161f;--border:#1e1e2e;--text:#e4e4ed;--text2:#9494a8;--text3:#6b6b80;--accent:#22c55e;--accent-l:#4ade80;--accent-glow:rgba(34,197,94,.12);--blue:#3b82f6;--orange:#f59e0b;--red:#ef4444;--pink:#ec4899;--cyan:#06b6d4;--sans:'Inter',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace;--max-w:1200px;--r:16px;--tr:.35s cubic-bezier(.4,0,.2,1);--nav-bg:rgba(10,10,15,.85);--glass:rgba(10,10,15,.6)}
@@ -26,18 +26,54 @@ a:hover{color:#86efac}
 img{max-width:100%;display:block}
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+::selection{background:var(--accent);color:#000}
+
+/* Matrix Rain Canvas */
+.matrix-rain{position:fixed;inset:0;z-index:-2;opacity:.07;pointer-events:none}
+
+/* Scanlines */
+.scanlines{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);opacity:.4}
+
+/* Glitch Effect */
+@keyframes glitch{0%{text-shadow:2px 0 #0ff,-2px 0 #f0f}20%{text-shadow:-2px 0 #0ff,2px 0 #f0f}40%{text-shadow:2px -1px #0ff,-2px 1px #f0f}60%{text-shadow:-1px 2px #0ff,1px -2px #f0f}80%{text-shadow:1px 0 #0ff,-1px 0 #f0f}100%{text-shadow:0 0 #0ff,0 0 #f0f}}
+@keyframes glitch-skew{0%{transform:skew(0deg)}2%{transform:skew(-2deg)}4%{transform:skew(0deg)}45%{transform:skew(0deg)}47%{transform:skew(3deg)}49%{transform:skew(0deg)}100%{transform:skew(0deg)}}
+.glitch{animation:glitch .3s ease infinite alternate,glitch-skew 5s ease infinite}
+.glitch:hover{animation:glitch .1s ease infinite alternate}
+
+/* Neon text */
+.neon-text{color:#0f0;text-shadow:0 0 7px #0f0,0 0 10px #0f0,0 0 21px #0f0,0 0 42px #0fa,0 0 82px #0fa}
+
+/* Terminal cursor */
+.terminal-cursor{display:inline-block;width:10px;height:1.1em;background:var(--accent);animation:cursor-blink 1s step-end infinite;vertical-align:text-bottom;margin-left:4px}
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Hacker border glow */
+@keyframes border-glow{0%{border-color:rgba(34,197,94,.3);box-shadow:0 0 5px rgba(34,197,94,.1)}50%{border-color:rgba(6,182,212,.5);box-shadow:0 0 20px rgba(6,182,212,.15),0 0 40px rgba(34,197,94,.05)}100%{border-color:rgba(34,197,94,.3);box-shadow:0 0 5px rgba(34,197,94,.1)}}
+.hacker-glow{animation:border-glow 3s ease-in-out infinite}
+
+/* Color shift on scroll */
+@keyframes hue-rotate{0%{filter:hue-rotate(0deg)}50%{filter:hue-rotate(15deg)}100%{filter:hue-rotate(0deg)}}
+.hero-bg .orb{animation:drift 12s ease-in-out infinite,hue-rotate 8s ease-in-out infinite}
+
+/* Flicker */
+@keyframes flicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.6}94%{opacity:1}96%{opacity:.8}97%{opacity:1}}
+.flicker{animation:flicker 4s infinite}
+
+/* Code rain dots */
+.code-dot{position:absolute;width:2px;background:var(--accent);border-radius:1px;opacity:.5;animation:rain-fall linear infinite}
+@keyframes rain-fall{0%{transform:translateY(-10px);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(100vh);opacity:0}}
 
 /* Scroll Progress */
-.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--accent));background-size:300% 100%;animation:grad-shift 4s ease infinite;z-index:200;width:0%;transition:width .1s linear}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#00ff41,#0ff,#f0f,#00ff41);background-size:400% 100%;animation:grad-shift 3s ease infinite;z-index:200;width:0%;transition:width .1s linear;box-shadow:0 0 10px rgba(0,255,65,.5)}
 @keyframes grad-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.dot-grid{position:fixed;inset:0;z-index:-1;background-image:radial-gradient(rgba(34,197,94,.06) 1px,transparent 1px);background-size:30px 30px;pointer-events:none}
+.dot-grid{position:fixed;inset:0;z-index:-1;background-image:radial-gradient(rgba(0,255,65,.04) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
 
 /* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:all var(--tr)}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:0 4px 30px rgba(0,0,0,.15)}
 .nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
-.nav-logo{font-weight:800;font-size:1.2rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.nav-logo{font-weight:800;font-size:1.2rem;color:var(--text);display:flex;align-items:center;gap:8px;font-family:var(--mono)}
 .nav-logo span{margin-left:-1px}
 .nav-logo span.b{color:var(--blue)}
 .nav-logo span.u{color:var(--cyan)}
@@ -56,9 +92,9 @@ img{max-width:100%;display:block}
 
 /* Sections */
 .section{max-width:var(--max-w);margin:0 auto;padding:6rem 2rem}
-.section-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:var(--accent-l);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;font-weight:500}
-.section-tag::before{content:'';width:24px;height:1px;background:var(--accent)}
-.section-title{font-size:2.75rem;font-weight:800;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:#0ff;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;font-weight:500}
+.section-tag::before{content:'>';width:auto;color:#00ff41;font-weight:700;font-size:.9rem}
+.section-title{font-size:2.75rem;font-weight:800;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em;font-family:'Share Tech Mono',var(--mono),monospace}
 .section-sub{color:var(--text2);font-size:1.1rem;max-width:600px}
 
 /* Hero */
@@ -69,11 +105,11 @@ img{max-width:100%;display:block}
 .hero-bg .o2{width:400px;height:400px;background:var(--cyan);bottom:-150px;left:-100px;animation:drift 12s ease-in-out infinite reverse}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
 .hero-left{position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(34,197,94,.25);padding:6px 18px;border-radius:100px;font-size:.85rem;color:var(--accent-l);font-weight:500;margin-bottom:2rem}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.3);padding:6px 18px;border-radius:100px;font-size:.85rem;color:#00ff41;font-weight:500;margin-bottom:2rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;animation:border-glow 3s ease-in-out infinite}
 .hero-badge .pulse{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-.03em}
-.hero h1 .grad{background:linear-gradient(135deg,var(--accent-l),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-.03em;font-family:'Share Tech Mono',var(--mono),monospace}
+.hero h1 .grad{background:linear-gradient(135deg,#00ff41,#0ff,#00ff41);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:grad-shift 3s ease infinite;text-shadow:none;filter:drop-shadow(0 0 8px rgba(0,255,65,.3))}
 .hero-desc{font-size:1.1rem;color:var(--text2);max-width:540px;margin-bottom:2rem;line-height:1.8}
 .hero-desc strong{color:var(--text)}
 .hero-actions{display:flex;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap}
@@ -112,9 +148,9 @@ img{max-width:100%;display:block}
 /* Services */
 .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem}
 .service-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2.5rem;position:relative;overflow:hidden;transition:all var(--tr)}
-.service-card:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
-.service-card.premium::before{background:linear-gradient(90deg,var(--orange),var(--pink),var(--accent))}
+.service-card:hover{border-color:#00ff41;transform:translateY(-5px);box-shadow:0 0 30px rgba(0,255,65,.1),0 20px 60px rgba(0,0,0,.4)}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#00ff41,#0ff,#00ff41);background-size:200% auto;animation:grad-shift 3s ease infinite}
+.service-card.premium::before{background:linear-gradient(90deg,#f0f,#0ff,#ff0,#f0f);background-size:300% auto;animation:grad-shift 4s ease infinite}
 .service-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:1.25rem}
 .service-badge-web{background:rgba(6,182,212,.12);color:var(--cyan);border:1px solid rgba(6,182,212,.25)}
 .service-badge-app{background:rgba(245,158,11,.12);color:var(--orange);border:1px solid rgba(245,158,11,.25)}
@@ -134,7 +170,7 @@ img{max-width:100%;display:block}
 /* Portfolio Showcase */
 .showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem}
 .showcase-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all var(--tr)}
-.showcase-card:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.showcase-card:hover{border-color:#00ff41;transform:translateY(-5px);box-shadow:0 0 30px rgba(0,255,65,.08),0 20px 60px rgba(0,0,0,.4)}
 .showcase-screens{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)}
 .showcase-screen{background:var(--bg2);padding:1.25rem;min-height:160px}
 .showcase-screen .screen-label{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;font-family:var(--mono)}
@@ -161,33 +197,34 @@ img{max-width:100%;display:block}
 /* Motto */
 .motto-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3rem;margin-top:2.5rem}
 .motto-quote{font-size:1.4rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.5}
-.motto-quote span{color:var(--accent-l)}
+.motto-quote span{color:#00ff41;text-shadow:0 0 10px rgba(0,255,65,.3)}
 .motto-body{color:var(--text2);font-size:1rem;line-height:1.9;max-width:700px;margin:0 auto;text-align:center}
 .motto-body strong{color:var(--text)}
 
 /* Skills */
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
 .skill-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;transition:all var(--tr)}
-.skill-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,.3)}
+.skill-card:hover{border-color:#0ff;transform:translateY(-4px);box-shadow:0 0 25px rgba(0,255,255,.08),0 16px 50px rgba(0,0,0,.3)}
 .skill-icon{font-size:2rem;margin-bottom:.75rem}
 .skill-name{font-weight:700;font-size:1.05rem;margin-bottom:.5rem}
 .skill-desc{color:var(--text2);font-size:.88rem;margin-bottom:1rem;line-height:1.6}
 .skill-tags{display:flex;flex-wrap:wrap;gap:6px}
 .skill-tags span{font-size:.78rem;padding:4px 12px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-weight:500;transition:all var(--tr)}
-.skill-tags span:hover{border-color:var(--accent);background:var(--accent-glow)}
+.skill-tags span:hover{border-color:#00ff41;background:rgba(0,255,65,.08);color:#00ff41;box-shadow:0 0 10px rgba(0,255,65,.1)}
 
 /* Contact */
 .contact-center{text-align:center}
 .contact-grid{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:2.5rem}
 .contact-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem 2.5rem;display:flex;align-items:center;gap:1rem;transition:all var(--tr);min-width:220px;justify-content:center}
-.contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3);color:var(--text)}
+.contact-card:hover{border-color:#0ff;transform:translateY(-3px);box-shadow:0 0 20px rgba(0,255,255,.1),0 12px 40px rgba(0,0,0,.3);color:var(--text)}
 .contact-card svg{width:24px;height:24px;fill:currentColor;flex-shrink:0}
 .c-label{font-weight:600;font-size:.95rem}
 .c-value{font-size:.82rem;color:var(--text3)}
 
 /* Footer */
 footer{text-align:center;padding:2.5rem 2rem;border-top:1px solid var(--border);color:var(--text3);font-size:.85rem}
-footer a{color:var(--accent-l)}
+footer a{color:#00ff41}
+footer{font-family:var(--mono);font-size:.8rem}
 
 /* Animations */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
@@ -252,6 +289,8 @@ footer a{color:var(--accent-l)}
 </style>
 </head>
 <body>
+<canvas class="matrix-rain" id="matrixCanvas"></canvas>
+<div class="scanlines"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="dot-grid"></div>
 
@@ -280,7 +319,7 @@ footer a{color:var(--accent-l)}
     <div class="hero-bg"><div class="orb o1"></div><div class="orb o2"></div></div>
     <div class="hero-left">
         <div class="hero-badge"><span class="pulse"></span> Now Accepting Projects</div>
-        <h1>Build Systems.<br>Stay Consistent.<br><span class="grad">Grow Faster.</span></h1>
+        <h1 class="glitch">Build Systems.<br>Stay Consistent.<br><span class="grad">Grow Faster.</span></h1>
         <p class="hero-desc">
             We help <strong>small &amp; medium businesses</strong> grow in the digital world with custom websites, Android apps, full-stack solutions &amp; business automation.
         </p>
@@ -540,7 +579,7 @@ footer a{color:var(--accent-l)}
 </section>
 
 <footer>
-    <p>&copy; 2026 <a href="https://www.linkedin.com/company/builduforward/" target="_blank" rel="noopener noreferrer">buildUforward</a>. Build systems. Stay consistent. Grow faster.</p>
+<p>&gt; &copy; 2026 <a href="https://www.linkedin.com/company/builduforward/" target="_blank" rel="noopener noreferrer">buildUforward</a> // Build systems. Stay consistent. Grow faster.<span class="terminal-cursor"></span></p>
 </footer>
 
 <!-- Booking Modal -->
@@ -606,6 +645,35 @@ footer a{color:var(--accent-l)}
 
     const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal,.reveal-stagger').forEach(el=>obs.observe(el));
+
+    // Matrix Rain
+    const mc=document.getElementById('matrixCanvas');
+    const mctx=mc.getContext('2d');
+    function resizeMC(){mc.width=window.innerWidth;mc.height=window.innerHeight;}
+    resizeMC();window.addEventListener('resize',resizeMC);
+    const chars='01アイウエオカキクケコサシスセソタチツテトABCDEFGHJKLMNPQRSTUVWXYZ<>{}[]=/\\*+-_|!@#$%^&~';
+    const fontSize=14;
+    let columns=Math.floor(mc.width/fontSize);
+    let drops=Array(columns).fill(1);
+    function drawMatrix(){
+        mctx.fillStyle='rgba(10,10,15,.06)';
+        mctx.fillRect(0,0,mc.width,mc.height);
+        for(let i=0;i<drops.length;i++){
+            const t=chars[Math.floor(Math.random()*chars.length)];
+            const x=i*fontSize;
+            const y=drops[i]*fontSize;
+            mctx.font=fontSize+'px JetBrains Mono';
+            const g=Math.random();
+            if(g>.7)mctx.fillStyle='rgba(0,255,65,.7)';
+            else if(g>.4)mctx.fillStyle='rgba(0,255,255,.4)';
+            else mctx.fillStyle='rgba(0,255,65,.3)';
+            mctx.fillText(t,x,y);
+            if(y>mc.height&&Math.random()>.975)drops[i]=0;
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix,45);
+    window.addEventListener('resize',()=>{columns=Math.floor(mc.width/fontSize);drops=Array(columns).fill(1);});
 
     const prog=document.getElementById('scrollProgress');
     window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%';});
