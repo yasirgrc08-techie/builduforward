@@ -131,6 +131,33 @@ img{max-width:100%;display:block}
 .session-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 24px;background:var(--accent);color:#000;border-radius:8px;font-weight:600;font-size:.9rem;transition:all var(--tr)}
 .session-btn:hover{background:var(--accent-l);color:#000;transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,197,94,.3)}
 
+/* Portfolio Showcase */
+.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem}
+.showcase-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all var(--tr)}
+.showcase-card:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.showcase-screens{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)}
+.showcase-screen{background:var(--bg2);padding:1.25rem;min-height:160px}
+.showcase-screen .screen-label{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;font-family:var(--mono)}
+.showcase-screen .screen-title{font-size:.95rem;font-weight:700;margin-bottom:.25rem}
+.showcase-screen .screen-stat{display:flex;gap:1rem;margin-top:.5rem}
+.showcase-screen .stat-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:.75rem;text-align:center}
+.showcase-screen .stat-box .sn{font-weight:800;font-size:1rem;display:block}
+.showcase-screen .stat-box .sl{color:var(--text3);font-size:.65rem}
+.showcase-body{padding:1.5rem 2rem}
+.showcase-badge{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-bottom:.75rem}
+.badge-live{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.badge-progress{background:rgba(245,158,11,.12);color:var(--orange);border:1px solid rgba(245,158,11,.25)}
+.showcase-title{font-size:1.2rem;font-weight:800;margin-bottom:.4rem}
+.showcase-desc{color:var(--text2);font-size:.88rem;line-height:1.7;margin-bottom:1rem}
+.showcase-tech{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem}
+.showcase-tech span{font-size:.72rem;padding:3px 10px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-weight:500}
+.showcase-features{list-style:none;margin-bottom:1rem}
+.showcase-features li{font-size:.82rem;color:var(--text2);padding:3px 0;display:flex;align-items:center;gap:6px}
+.showcase-features li::before{content:'✓';color:var(--green);font-weight:700;font-size:.75rem}
+.showcase-link{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;font-weight:600;color:var(--accent-l);transition:gap var(--tr)}
+.showcase-link:hover{gap:10px}
+@media(max-width:768px){.showcase-grid{grid-template-columns:1fr}.showcase-screens{grid-template-columns:1fr}}
+
 /* Motto */
 .motto-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3rem;margin-top:2.5rem}
 .motto-quote{font-size:1.4rem;font-weight:800;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.5}
@@ -235,6 +262,7 @@ footer a{color:var(--accent-l)}
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#skills">Expertise</a></li>
             <li><a href="#motto">Philosophy</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -344,6 +372,73 @@ footer a{color:var(--accent-l)}
                 <span class="price-note">starting price</span>
             </div>
             <a href="#" onclick="openBooking('fullstack','Full-Stack Cross-Platform App',5000);return false;" class="session-btn">Get Started &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Showcase -->
+<section class="section" id="portfolio">
+    <div class="reveal" style="text-align:center;">
+        <span class="section-tag">Our Work</span>
+        <h2 class="section-title">Projects We've Built</h2>
+        <p class="section-sub" style="margin:0 auto;">Real products delivered to real clients. Here's a glimpse of what we build.</p>
+    </div>
+    <div class="showcase-grid reveal">
+        <div class="showcase-card" style="grid-column:1/3;">
+            <div class="showcase-screens">
+                <div class="showcase-screen">
+                    <div class="screen-label">Admin Dashboard</div>
+                    <div class="screen-title">Welcome back, Yasir!</div>
+                    <div class="screen-stat">
+                        <div class="stat-box"><span class="sn">40</span><span class="sl">Students</span></div>
+                        <div class="stat-box"><span class="sn">8</span><span class="sl">Teachers</span></div>
+                        <div class="stat-box"><span class="sn">8</span><span class="sl">Classes</span></div>
+                        <div class="stat-box"><span class="sn">84%</span><span class="sl">Attendance</span></div>
+                    </div>
+                </div>
+                <div class="showcase-screen">
+                    <div class="screen-label">Teacher Portal</div>
+                    <div class="screen-title">Welcome back, Priyanka!</div>
+                    <div class="screen-stat">
+                        <div class="stat-box"><span class="sn">1</span><span class="sl">My Classes</span></div>
+                        <div class="stat-box"><span class="sn">19</span><span class="sl">Students</span></div>
+                        <div class="stat-box"><span class="sn">84%</span><span class="sl">Attendance</span></div>
+                    </div>
+                </div>
+                <div class="showcase-screen">
+                    <div class="screen-label">Student Portal</div>
+                    <div class="screen-title">Welcome back, Aarav!</div>
+                    <div class="screen-stat">
+                        <div class="stat-box"><span class="sn">3</span><span class="sl">Classes</span></div>
+                        <div class="stat-box"><span class="sn">88%</span><span class="sl">Attendance</span></div>
+                        <div class="stat-box"><span class="sn">38</span><span class="sl">Attended</span></div>
+                    </div>
+                </div>
+                <div class="showcase-screen">
+                    <div class="screen-label">Login Screen</div>
+                    <div class="screen-title">School Management System</div>
+                    <div style="margin-top:.5rem;font-size:.78rem;color:var(--text3);">Role-based access: Admin · Teacher · Student<br>Quick demo login with one click</div>
+                </div>
+            </div>
+            <div class="showcase-body">
+                <span class="showcase-badge badge-live">✅ Completed</span>
+                <div class="showcase-title">School Management System</div>
+                <div class="showcase-desc">A full-stack school management platform with role-based dashboards for Admin, Teacher, and Student. Includes attendance tracking, class management, subject enrollment, and analytics with charts.</div>
+                <div class="showcase-tech">
+                    <span>React</span><span>Vite</span><span>Tailwind CSS</span><span>Node.js</span><span>Express</span><span>PostgreSQL</span><span>Prisma</span><span>JWT Auth</span><span>Docker</span><span>Swagger API</span>
+                </div>
+                <ul class="showcase-features">
+                    <li>3 role-based dashboards (Admin, Teacher, Student)</li>
+                    <li>40 students, 8 teachers, 8 classes seeded</li>
+                    <li>Attendance tracking with pie charts &amp; breakdowns</li>
+                    <li>Class enrollment &amp; subject management</li>
+                    <li>JWT authentication with demo login</li>
+                    <li>REST API with Swagger documentation</li>
+                    <li>Docker deployment ready</li>
+                    <li>CI/CD with GitHub Actions + Azure deploy</li>
+                </ul>
+                <a href="https://github.com/yasirgrc08-techie/school-management-system" class="showcase-link" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+            </div>
         </div>
     </div>
 </section>
